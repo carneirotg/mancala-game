@@ -9,16 +9,36 @@ public class Pit {
 	@Id
 	private String id;
 	
+	private int seq;
+	
 	private int ammount;
 	
-	private Player owner;
-
-	public String getId() {
-		return id;
+	private boolean main;
+	
+	public Pit(){
+		
+	}
+	
+	public Pit(int seq, int ammount, Player owner, boolean larger){
+		this.seq = seq;
+		this.ammount = ammount;
+		this.main = larger;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public int getId() {
+		return seq;
+	}
+	
+	public void setId(int id) {
+		this.seq = id;
+	}
+
+	public int getSeq() {
+		return seq;
+	}
+
+	public void setSeq(int seq) {
+		this.seq = seq;
 	}
 
 	public int getAmmount() {
@@ -28,18 +48,29 @@ public class Pit {
 	public void setAmmount(int ammount) {
 		this.ammount = ammount;
 	}
-
-	public Player getOwner() {
-		return owner;
-	}
-
-	public void setOwner(Player owner) {
-		this.owner = owner;
-	}
 	
+	public void add(int ammount){
+		this.ammount += ammount;
+	}
+
+	public boolean isMain() {
+		return main;
+	}
+
+	public void setMain(boolean main) {
+		this.main = main;
+	}
+
 	@Override
 	public String toString(){
-		return String.format("id: [%s], ammout: [%d], owner: [%s]", this.id, this.ammount, this.owner.getId());
+		return String.format("id: [%d], ammout: [%d], main: [%s]", this.seq, this.ammount, this.main);
+	}
+	
+	public boolean equals(Object obj){
+		if (obj instanceof Pit){
+			return ((Pit) obj).getId() == this.seq;
+		}
+		return false;
 	}
 
 }

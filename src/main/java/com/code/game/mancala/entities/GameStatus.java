@@ -4,7 +4,7 @@ public class GameStatus {
 	
 	private boolean finished;
 	
-	private Player winner;
+	private String winner;
 
 	public boolean isFinished() {
 		return finished;
@@ -14,11 +14,11 @@ public class GameStatus {
 		this.finished = finished;
 	}
 
-	public Player getWinner() {
+	public String getWinner() {
 		return winner;
 	}
 
-	public void setWinner(Player winner) {
+	public void setWinner(String winner) {
 		this.winner = winner;
 	}
 	

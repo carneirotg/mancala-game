@@ -1,14 +1,13 @@
 package com.code.game.mancala.rest;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -16,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.code.game.mancala.entities.GameStatus;
 import com.code.game.mancala.entities.Pit;
+import com.code.game.mancala.entities.Player;
+import com.code.game.mancala.repository.PitRepository;
+import com.code.game.mancala.repository.PlayerRepository;
 import com.code.game.mancala.service.GameService;
 
 @RestController
@@ -24,11 +26,30 @@ public class GameController {
 	
 	@Autowired
 	private GameService gameService;
+	
+	@Autowired
+	private PlayerRepository playerRepository;
+	
+	private PitRepository pitRepository;
 
 	private static final Logger logger = LogManager.getLogger(GameController.class);
 	
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/pits", method = RequestMethod.GET)
+	public List<Pit> getBoard() throws EmptyBoardException{
+		
+		List<Pit> board = pitRepository.findAll();
+		
+		if (board.isEmpty()){
+			throw new EmptyBoardException("The board is empty, did it has been created?");
+		}
+		
+		return board;
+		
+	}
+	
 	@ResponseStatus(HttpStatus.CREATED)
-	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public void createGame(){
 		logger.info("POST - CREATE");
 		gameService.createGame();
@@ -36,10 +57,16 @@ public class GameController {
 	
 	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
-	public ResponseEntity<GameStatus> sortPieces(@RequestBody Pit pit) throws InvalidRequestException{
+	@RequestMapping(value = "/pits/{pitId}/player/{playerName}", method = RequestMethod.PUT)
+	public ResponseEntity<GameStatus> sortPieces(@PathVariable String pitId, @PathVariable String playerName) throws InvalidRequestException{
 		
-		GameStatus status = gameService.sortPieces(pit);
+		logger.info("pitId: ["+pitId+"]");
+		logger.info("playerId: ["+playerName+"]");
+		
+		Player player = playerRepository.findByName(playerName);
+		System.out.println(player);
+		
+		GameStatus status = gameService.sortPieces(pitId, player);
 		
 		return new ResponseEntity<GameStatus>(status, HttpStatus.NO_CONTENT);
 		
