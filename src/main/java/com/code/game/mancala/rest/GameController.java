@@ -30,6 +30,7 @@ public class GameController {
 	@Autowired
 	private PlayerRepository playerRepository;
 	
+	@Autowired
 	private PitRepository pitRepository;
 
 	private static final Logger logger = LogManager.getLogger(GameController.class);

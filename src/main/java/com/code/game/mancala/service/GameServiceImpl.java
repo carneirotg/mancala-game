@@ -67,11 +67,13 @@ public class GameServiceImpl implements GameService{
 			int pitSeq = p.getSeq();
 			int oppositeSideSeq = (pitSeq + (board.size()-2))-(2*pitSeq);
 			
-			Pit mainPit = currentPlayer.getMainPit();
-			board.get(mainPit.getSeq()).add(board.get(oppositeSideSeq).getAmmount() + 1);
-			board.get(oppositeSideSeq).setAmmount(0);
-			board.get(pitSeq).setAmmount(0);
-			return true;
+			if (oppositeSideSeq > 0){
+				Pit mainPit = currentPlayer.getMainPit();
+				board.get(mainPit.getSeq()).add(board.get(oppositeSideSeq).getAmmount() + 1);
+				board.get(oppositeSideSeq).setAmmount(0);
+				board.get(pitSeq).setAmmount(0);
+				return true;
+			}
 		}
 		return false;
 	}

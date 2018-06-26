@@ -1,24 +1,36 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
-const client = require('./client');
+
+import Game from './game';
 
 class App extends React.Component {
 
-	constructor(props) {
-		super(props);
-		this.state = {employees: []};
-	}
-
 	componentDidMount() {
-		client({method: 'GET', path: '/game/pits'}).done(
-				response => {
-					this.setState({board: response.entity._embedded.board});
-		});
+		fetch("http://localhost:8080/game/", {
+		    headers: {
+		      'content-type': 'application/json'
+		    },
+		    method: 'POST'
+		  })
+	}
+	
+	handleStartGame() {
+		ReactDOM.render(
+				<Game />,
+				document.getElementById('wrapper')
+			)
 	}
 
 	render() {
 		return (
-			<GameBoard board={this.state.board}/>
+			<div>
+				<button className="btn btn-primary btn-lg" onClick={this.handleStartGame}>Start Game</button>
+			</div>
 		)
 	}
 }
+
+ReactDOM.render(
+		<App />,
+		document.getElementById('wrapper')
+	)
