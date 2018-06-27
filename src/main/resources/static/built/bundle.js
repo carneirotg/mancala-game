@@ -48,9 +48,9 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _game = __webpack_require__(1);
+	var _Game = __webpack_require__(1);
 	
-	var _game2 = _interopRequireDefault(_game);
+	var _Game2 = _interopRequireDefault(_Game);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -85,7 +85,7 @@
 		}, {
 			key: 'handleStartGame',
 			value: function handleStartGame() {
-				ReactDOM.render(React.createElement(_game2.default, null), document.getElementById('wrapper'));
+				ReactDOM.render(React.createElement(_Game2.default, null), document.getElementById('wrapper'));
 			}
 		}, {
 			key: 'render',
@@ -123,6 +123,10 @@
 	
 	var _Pit2 = _interopRequireDefault(_Pit);
 	
+	var _Stone = __webpack_require__(3);
+	
+	var _Stone2 = _interopRequireDefault(_Stone);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -143,9 +147,9 @@
 	
 			_this.state = {
 				player1Pits: [],
-				player1MainPit: null,
+				player1MainPit: [],
 				player2Pits: [],
-				player2MainPit: null
+				player2MainPit: []
 			};
 			return _this;
 		}
@@ -170,7 +174,7 @@
 					}
 	
 					_this2.setState({ player1MainPit: data[13] });
-					_this2.setState({ player2MainPit: data[7] });
+					_this2.setState({ player2MainPit: data[6] });
 					_this2.setState({ player1Pits: pits1 });
 					_this2.setState({ player2Pits: pits2 });
 				});
@@ -184,87 +188,183 @@
 				var player2Pits = this.state.player2Pits;
 	
 	
-				console.log(this.state);
-	
-				var cardStyle = {
-					background: 'url(images/stone.png)'
+				var playerStyle = {
+					display: 'block'
 				};
 	
-				//	    {player1Pits.map((pit: any) =>
-				//        <div className="col-sm" key={pit.seq}>
-				//        	
-				//        </div>
-				//      )}
-	
-				var divStyle = {
-					border: '1px'
-				};
-	
-				return React.createElement(
-					'div',
-					null,
-					React.createElement(
-						'h2',
+				if (player1Pits[0] && player2Pits[0]) {
+					console.log(player1Pits[0].ammount);
+					return React.createElement(
+						'div',
 						null,
 						React.createElement(
-							'span',
-							{ className: 'badge badge-secondary' },
-							'Player 1'
-						)
-					),
-					React.createElement(
-						'div',
-						{ className: 'container' },
+							'h2',
+							null,
+							React.createElement(
+								'span',
+								{ className: 'badge badge-secondary', style: playerStyle },
+								'Player 1'
+							)
+						),
 						React.createElement(
 							'div',
-							{ className: 'row' },
+							{ className: 'grid' },
 							React.createElement(
 								'div',
-								{ className: 'col-6', style: divStyle },
-								'.col-6'
+								{ className: 'grid-item grid-item--width2 grid-item--height2' },
+								React.createElement('img', { src: 'images/main_pit.png' }),
+								React.createElement(_Stone2.default, { ammount: player1MainPit.ammount }),
+								React.createElement(
+									'span',
+									{ className: 'ammount' },
+									player1MainPit.ammount
+								)
 							),
 							React.createElement(
 								'div',
-								{ className: 'col-1', style: divStyle },
-								'.col-9'
+								{ className: 'grid-item grid-item-pit' },
+								React.createElement(_Stone2.default, { ammount: player1Pits[0].ammount }),
+								React.createElement(
+									'span',
+									{ className: 'ammount' },
+									player1Pits[0].ammount
+								)
 							),
 							React.createElement(
 								'div',
-								{ className: 'col-1', style: divStyle },
-								'.col-9'
+								{ className: 'grid-item grid-item-pit' },
+								React.createElement(_Stone2.default, { ammount: player1Pits[1].ammount }),
+								React.createElement(
+									'span',
+									{ className: 'ammount' },
+									player1Pits[1].ammount
+								)
 							),
 							React.createElement(
 								'div',
-								{ className: 'col-1', style: divStyle },
-								'.col-9'
+								{ className: 'grid-item grid-item-pit' },
+								React.createElement(_Stone2.default, { ammount: player1Pits[2].ammount }),
+								React.createElement(
+									'span',
+									{ className: 'ammount' },
+									player1Pits[2].ammount
+								)
 							),
 							React.createElement(
 								'div',
-								{ className: 'col-1', style: divStyle },
-								'.col-9'
+								{ className: 'grid-item grid-item-pit' },
+								React.createElement(_Stone2.default, { ammount: player1Pits[3].ammount }),
+								React.createElement(
+									'span',
+									{ className: 'ammount' },
+									player1Pits[3].ammount
+								)
 							),
 							React.createElement(
 								'div',
-								{ className: 'col-1', style: divStyle },
-								'.col-9'
+								{ className: 'grid-item grid-item-pit' },
+								React.createElement(_Stone2.default, { ammount: player1Pits[4].ammount }),
+								React.createElement(
+									'span',
+									{ className: 'ammount' },
+									player1Pits[4].ammount
+								)
 							),
 							React.createElement(
 								'div',
-								{ className: 'col-1', style: divStyle },
-								'.col-9'
+								{ className: 'grid-item grid-item-pit' },
+								React.createElement(_Stone2.default, { ammount: player1Pits[5].ammount }),
+								React.createElement(
+									'span',
+									{ className: 'ammount' },
+									player1Pits[5].ammount
+								)
+							),
+							React.createElement(
+								'div',
+								{ className: 'grid-item grid-item-pit' },
+								React.createElement(_Stone2.default, { ammount: player2Pits[0].ammount }),
+								React.createElement(
+									'span',
+									{ className: 'ammount' },
+									player2Pits[0].ammount
+								)
+							),
+							React.createElement(
+								'div',
+								{ className: 'grid-item grid-item-pit' },
+								React.createElement(_Stone2.default, { ammount: player2Pits[1].ammount }),
+								React.createElement(
+									'span',
+									{ className: 'ammount' },
+									player2Pits[1].ammount
+								)
+							),
+							React.createElement(
+								'div',
+								{ className: 'grid-item grid-item-pit' },
+								React.createElement(_Stone2.default, { ammount: player2Pits[2].ammount }),
+								React.createElement(
+									'span',
+									{ className: 'ammount' },
+									player2Pits[2].ammount
+								)
+							),
+							React.createElement(
+								'div',
+								{ className: 'grid-item grid-item-pit' },
+								React.createElement(_Stone2.default, { ammount: player2Pits[3].ammount }),
+								React.createElement(
+									'span',
+									{ className: 'ammount' },
+									player2Pits[3].ammount
+								)
+							),
+							React.createElement(
+								'div',
+								{ className: 'grid-item grid-item-pit' },
+								React.createElement(_Stone2.default, { ammount: player2Pits[4].ammount }),
+								React.createElement(
+									'span',
+									{ className: 'ammount' },
+									player2Pits[4].ammount
+								)
+							),
+							React.createElement(
+								'div',
+								{ className: 'grid-item grid-item-pit' },
+								React.createElement(_Stone2.default, { ammount: player2Pits[5].ammount }),
+								React.createElement(
+									'span',
+									{ className: 'ammount' },
+									player2Pits[5].ammount
+								)
+							),
+							React.createElement(
+								'div',
+								{ className: 'grid-item grid-item--width2 grid-item--height2 last-main-pit' },
+								React.createElement('img', { src: 'images/main_pit.png' }),
+								React.createElement(_Stone2.default, { ammount: player2MainPit.ammount }),
+								React.createElement(
+									'span',
+									{ className: 'ammount' },
+									player2MainPit.ammount
+								)
+							)
+						),
+						React.createElement(
+							'h2',
+							null,
+							React.createElement(
+								'span',
+								{ className: 'badge badge-secondary', style: playerStyle },
+								'Player 2'
 							)
 						)
-					),
-					React.createElement(
-						'h2',
-						null,
-						React.createElement(
-							'span',
-							{ className: 'badge badge-secondary' },
-							'Player 2'
-						)
-					)
-				);
+					);
+				} else {
+					return React.createElement('div', null);
+				}
 			}
 		}]);
 	
@@ -327,10 +427,16 @@
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -338,26 +444,46 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var React = __webpack_require__(4);
-	
 	var Stone = function (_React$Component) {
-		_inherits(Stone, _React$Component);
+	  _inherits(Stone, _React$Component);
 	
-		function Stone() {
-			_classCallCheck(this, Stone);
+	  function Stone() {
+	    _classCallCheck(this, Stone);
 	
-			return _possibleConstructorReturn(this, (Stone.__proto__ || Object.getPrototypeOf(Stone)).apply(this, arguments));
-		}
+	    return _possibleConstructorReturn(this, (Stone.__proto__ || Object.getPrototypeOf(Stone)).apply(this, arguments));
+	  }
 	
-		_createClass(Stone, [{
-			key: "render",
-			value: function render() {
-				React.createElement("img", { src: "images/stone.png" });
-			}
-		}]);
+	  _createClass(Stone, [{
+	    key: "createStones",
+	    value: function createStones() {
+	      var stones = [];
+	      console.log("createStones!");
 	
-		return Stone;
-	}(React.Component);
+	      for (var j = 0; j < this.props.ammount; j++) {
+	        stones.push(_react2.default.createElement(
+	          "div",
+	          { className: "grid-item-stone" },
+	          _react2.default.createElement("img", { key: Math.random(), className: "stoneImage", src: "images/stone.png" })
+	        ));
+	      }
+	
+	      return stones;
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      console.log(this.props);
+	
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "grid-stone" },
+	        this.createStones()
+	      );
+	    }
+	  }]);
+	
+	  return Stone;
+	}(_react2.default.Component);
 	
 	exports.default = Stone;
 

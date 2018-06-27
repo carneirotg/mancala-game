@@ -1,7 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 
-import Game from './game';
+import Game from './Game';
 
 class App extends React.Component {
 

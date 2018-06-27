@@ -1,0 +1,68 @@
+* { box-sizing: border-box; }
+
+body { font-family: sans-serif; }
+
+/* ---- grid ---- */
+
+.grid {
+  max-width: 1200px;
+  max-height: 305px;
+  margin-bottom: 25px;
+}
+
+/* clearfix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.ammount {
+	text-align: center;
+	display: block;
+}
+
+.pitImage {
+	height: 85%;
+}
+
+/* ---- grid-item ---- */
+
+.grid-item {
+  width: 160px;
+  height: 152px;
+  float: left;
+}
+
+.grid-item-pit {
+	background: url('../images/pit.png') no-repeat;
+}
+
+.grid-item--width2 { width: 120px; }
+.grid-item--height2 { height: 305px; }
+.last-main-pit {margin-top: -150px;}
+
+
+/*---- grid stone ---- */
+
+.grid-stone{
+	max-width: 160px;
+  	max-height: 152px;
+}
+
+.grid-stone:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.grid-item-stone{
+	float: left;
+	width: 16px;
+	height: 16px;
+}
+
+.stoneImage {
+	width: 100%;
+	height: 100%;
+}

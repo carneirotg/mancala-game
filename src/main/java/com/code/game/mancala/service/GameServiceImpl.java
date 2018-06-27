@@ -102,7 +102,7 @@ public class GameServiceImpl implements GameService{
 	public void createGame() {
 		
 		ArrayList<Pit> board = new ArrayList<>();
-		int maxStones = 2;
+		int maxStones = 6;
 
 		pitRepository.deleteAll();
 		playerRepository.deleteAll();
@@ -116,18 +116,14 @@ public class GameServiceImpl implements GameService{
 		ArrayList<Pit> player2Pits = new ArrayList<>();
 		
 		for (int i = 0; i < 6; i++) {
-//			Pit pit = new Pit(Integer.toString(i), 6, player2, false);
 			Pit pit = new Pit(i, maxStones, player2, false);
 			player2Pits.add(pit);
 		}
-//		player2Pits.add(new Pit("6", 0, player2, true));
 		player2Pits.add(new Pit(6, 0, player2, true));
 		for (int i = 7; i < 13; i++) {
-//			Pit pit = new Pit(Integer.toString(i), 6, player1, false);
 			Pit pit = new Pit(i, maxStones, player1, false);
 			player1Pits.add(pit);
 		}
-//		player1Pits.add(new Pit("13", 0, player1, true));
 		player1Pits.add(new Pit(13, 0, player1, true));
 		
 		player1.setPits(player1Pits);
