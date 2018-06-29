@@ -34,7 +34,7 @@ public class Player {
 	}
 	
 	public Pit getMainPit(){
-		return pits.get(pits.size()-1);
+		return pits.stream().filter(x -> x.isMain()).findFirst().get();
 	}
 
 	public String getName() {

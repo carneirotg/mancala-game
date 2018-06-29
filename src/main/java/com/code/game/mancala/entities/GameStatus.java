@@ -1,5 +1,8 @@
 package com.code.game.mancala.entities;
 
+import javax.persistence.Entity;
+
+@Entity
 public class GameStatus {
 	
 	private boolean finished;

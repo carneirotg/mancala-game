@@ -26,8 +26,18 @@ public class GameServiceImpl implements GameService{
 	@Autowired
 	private PlayerRepository playerRepository;
 	
+	private GameStatus status = new GameStatus();
+	
+	private Player player1 = new Player();
+	private Player player2 = new Player();
+	
 	@Override
-	public GameStatus sortPieces(String pitId, Player currentPlayer) {
+	public GameStatus getStatus(){
+		return status;
+	}
+	
+	@Override
+	public void sortPieces(String pitId, Player currentPlayer) {
 		logger.debug("Putting pieces into the pits...");
 		
 		List<Pit> board = pitRepository.findAll();
@@ -41,6 +51,7 @@ public class GameServiceImpl implements GameService{
 			
 			Pit p = board.get(i%board.size());
 			if (!p.isMain()){
+				System.out.println("p.isMain() -> " + p.isMain());
 				if (!captureStones(p, initialAmmout, board, currentPlayer)){
 					p.add(1);
 				}
@@ -53,21 +64,28 @@ public class GameServiceImpl implements GameService{
 		
 		pitRepository.saveAll(board);
 		
-		boolean finished = evaluateEndGame(board, currentPlayer);
-		GameStatus status = new GameStatus();
+		boolean finished = evaluateEndGame(board, currentPlayer);		
 		status.setFinished(finished);
-		status.setWinner(currentPlayer.getName());
+		status.setWinner(getWinner());
 		
-		printBoard(board);
-		return status;
+		printBoard(board);		
 	}
 	
+	private String getWinner() {
+		System.out.println(player1.getMainPit().getAmmount() + ", " + player2.getMainPit().getAmmount());
+		if (player1.getMainPit().getAmmount() > player2.getMainPit().getAmmount()){
+			return player1.getName();
+		} else {
+			return player2.getName();
+		}
+	}
+
 	private boolean captureStones(Pit p, int initialAmmout, List<Pit> board, Player currentPlayer) {
 		if(p.getAmmount() == 0 && initialAmmout == 1 && pitBelongsToPlayer(p, currentPlayer)){
 			int pitSeq = p.getSeq();
 			int oppositeSideSeq = (pitSeq + (board.size()-2))-(2*pitSeq);
-			
-			if (oppositeSideSeq > 0){
+			if (board.get(oppositeSideSeq).getAmmount() > 0){
+				
 				Pit mainPit = currentPlayer.getMainPit();
 				board.get(mainPit.getSeq()).add(board.get(oppositeSideSeq).getAmmount() + 1);
 				board.get(oppositeSideSeq).setAmmount(0);
@@ -88,12 +106,15 @@ public class GameServiceImpl implements GameService{
 		
 		Player player = playerRepository.findByName(currentPlayer.getName());
 		
+		System.out.println(player.getPits());
+		
 		int currentPlayerAmmountSum = player.getPits().stream()
+						  .filter(x -> !x.isMain())
 						  .mapToInt(x -> x.getAmmount())
 						  .reduce((x,y) -> x+y)
 						  .getAsInt();
 		
-		logger.debug(String.format("Total ammout player[%s] -> [%d]", currentPlayer.getName(), currentPlayerAmmountSum));
+		logger.info(String.format("Total ammout player[%s] -> [%d]", currentPlayer.getName(), currentPlayerAmmountSum));
 				
 		return currentPlayerAmmountSum == 0;
 	}
@@ -102,16 +123,16 @@ public class GameServiceImpl implements GameService{
 	public void createGame() {
 		
 		ArrayList<Pit> board = new ArrayList<>();
-		int maxStones = 6;
+		int maxStones = 1;
 
 		pitRepository.deleteAll();
 		playerRepository.deleteAll();
 
-		Player player1 = new Player();
+		player1 = new Player();
 		player1.setName("player1");
 		ArrayList<Pit> player1Pits = new ArrayList<>();
 		
-		Player player2 = new Player();
+		player2 = new Player();
 		player2.setName("player2");
 		ArrayList<Pit> player2Pits = new ArrayList<>();
 		

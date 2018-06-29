@@ -6,8 +6,10 @@ import com.code.game.mancala.entities.Player;
 
 public interface GameService {
 
-	GameStatus sortPieces(String pitId, Player player);
+	void sortPieces(String pitId, Player player);
 
 	void createGame();
+	
+	GameStatus getStatus();
 
 }
