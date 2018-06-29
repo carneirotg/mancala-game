@@ -1,18 +1,17 @@
 package com.code.game.mancala.rest;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.context.support.StaticApplicationContext;
@@ -26,13 +25,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import com.code.game.mancala.base.GameConfig;
-import com.code.game.mancala.entities.GameStatus;
 import com.code.game.mancala.entities.Pit;
 import com.code.game.mancala.entities.Player;
 import com.code.game.mancala.repository.PitRepository;
+import com.code.game.mancala.repository.PlayerRepository;
 import com.code.game.mancala.service.GameService;
-import com.code.game.mancala.service.GameServiceImpl;
-import com.code.game.mancala.util.TestUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @AutoConfigureMockMvc
@@ -50,6 +47,9 @@ public class GameControllerTest {
 	
 	@Autowired
 	private PitRepository pitRepository;
+	
+	@Autowired
+	private PlayerRepository playerRepository;
 	
 	
 	@Before
@@ -73,54 +73,31 @@ public class GameControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isCreated());
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void put_sortPiecesAndDontFinishTheGame_WithSucess() throws Exception{
 		
 //		Player player = new Player();
-//		player.setId("1");
+//		player.setName("player2");
 //		
-//		GameStatus status = new GameStatus();
-//		status.setFinished(true);
-//		status.setWinner(player.getName());
+//		Pit pit = new Pit(0, 6, player, false);
 //		
-//		Pit pit = new Pit(0,6,player,false);
+//		List<Pit> pits = new ArrayList<Pit>(14);
+//		pits.add(pit);
 //		
+//		when(pitRepository.findAll()).thenReturn(pits);
 //		when(pitRepository.findById(pit.getSeq())).thenReturn(pit);
+//		when(playerRepository.findByName(player.getName())).thenReturn(player);
 //		
-//		this.mockMvc.perform(put("/game")
-//				.contentType(MediaType.APPLICATION_JSON_VALUE)
-//				.content(TestUtil.convertObjectToJsonBytes(pit)))
-//				.andExpect(MockMvcResultMatchers.jsonPath("$.finished").value("false"))
+//		this.mockMvc.perform(put("/game/pits/"+pit.getId()+"/player/"+player.getName())
+//				.contentType(MediaType.APPLICATION_JSON_VALUE))
 //				.andExpect(MockMvcResultMatchers.status().isNoContent());
 	}
 	
 	
-//	@Test
-//	public void put_sortPiecesAndFinishTheGame_WithSucess() throws Exception{
-//		
-//		String expectedResponse = "{\"finished\": true, \"winner\": \"Player 1\" }";
-//		
-//		Player player = new Player();
-//		player.setId("Player 1");
-//		
-//		GameStatus status = new GameStatus();
-//		status.setFinished(true);
-//		status.setWinner(player);
-//		
-//		Pit pit = new Pit();
-//		pit.setId("1");
-//		pit.setOwner(player);
-//		pit.setAmmount(6);
-//		
-//		when(pitRepository.findById(pit.getId())).thenReturn(Optional.of(pit));
-//		when(gameService.sortPieces(pit)).thenReturn(status);
-//		
-//		this.mockMvc.perform(put("/game")
-//				.contentType(MediaType.APPLICATION_JSON_VALUE)
-//				.content(TestUtil.convertObjectToJsonBytes(pit)))
-//				.andExpect(MockMvcResultMatchers.jsonPath("$.finished").value("true"))
-//				.andExpect(MockMvcResultMatchers.jsonPath("$.winner").value("Player 1"))
-//				.andExpect(MockMvcResultMatchers.status().isNoContent());
-//	}
+	@Test
+	public void put_sortPiecesAndFinishTheGame_WithSucess() throws Exception{
+
+	}
 }
 

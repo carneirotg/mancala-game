@@ -26,7 +26,7 @@ public class Pit {
 	}
 
 	public int getId() {
-		return seq;
+		return this.seq;
 	}
 	
 	public void setId(int id) {

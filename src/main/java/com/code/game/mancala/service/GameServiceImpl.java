@@ -51,7 +51,6 @@ public class GameServiceImpl implements GameService{
 			
 			Pit p = board.get(i%board.size());
 			if (!p.isMain()){
-				System.out.println("p.isMain() -> " + p.isMain());
 				if (!captureStones(p, initialAmmout, board, currentPlayer)){
 					p.add(1);
 				}
@@ -60,6 +59,7 @@ public class GameServiceImpl implements GameService{
 					p.add(1);
 				}
 			}
+			logger.info(p);
 		}
 		
 		pitRepository.saveAll(board);
@@ -72,7 +72,8 @@ public class GameServiceImpl implements GameService{
 	}
 	
 	private String getWinner() {
-		System.out.println(player1.getMainPit().getAmmount() + ", " + player2.getMainPit().getAmmount());
+		player1 = playerRepository.findByName(player1.getName());
+		player2 = playerRepository.findByName(player2.getName());
 		if (player1.getMainPit().getAmmount() > player2.getMainPit().getAmmount()){
 			return player1.getName();
 		} else {
@@ -106,8 +107,6 @@ public class GameServiceImpl implements GameService{
 		
 		Player player = playerRepository.findByName(currentPlayer.getName());
 		
-		System.out.println(player.getPits());
-		
 		int currentPlayerAmmountSum = player.getPits().stream()
 						  .filter(x -> !x.isMain())
 						  .mapToInt(x -> x.getAmmount())
@@ -123,7 +122,7 @@ public class GameServiceImpl implements GameService{
 	public void createGame() {
 		
 		ArrayList<Pit> board = new ArrayList<>();
-		int maxStones = 1;
+		int maxStones = 6;
 
 		pitRepository.deleteAll();
 		playerRepository.deleteAll();
@@ -160,22 +159,22 @@ public class GameServiceImpl implements GameService{
 	
 	private void printBoard(List<Pit> board){
 		
-		System.out.println("***********************************");
-		System.out.println("************* Mancala *************");
-		System.out.println("***********************************");
-		System.out.println("************* Player 1 ************");
-		System.out.print("|"+board.get(13).getAmmount()+"|");
+		logger.info("***********************************");
+		logger.info("************* Mancala *************");
+		logger.info("***********************************");
+		logger.info("************* Player 1 ************");
+		logger.info("|{}|", board.get(13).getAmmount());
 		for (int i = 12; i > 6; i--) {
-			System.out.print("["+board.get(i).getAmmount()+"] ");
+			logger.info("[{}] ", board.get(i).getAmmount());
 		}
-		System.out.print("|¯|");
-		System.out.println("");
-		System.out.print("|_|");
+		logger.info("|¯|");
+		logger.info("");
+		logger.info("|_|");
 		for (int i = 0; i < 6; i++) {
-			System.out.print("["+board.get(i).getAmmount()+"] ");
+			logger.info("[{}] ", board.get(i).getAmmount());
 		}
-		System.out.print("|"+board.get(6).getAmmount()+"| ");
-		System.out.println("\n************* Player 2 ************");
+		logger.info("|{}| ", board.get(6).getAmmount());
+		logger.info("\n************* Player 2 ************");
 		
 	}
 

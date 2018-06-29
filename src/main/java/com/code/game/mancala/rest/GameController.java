@@ -58,7 +58,6 @@ public class GameController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@RequestMapping(method = RequestMethod.POST)
 	public void createGame(){
-		logger.info("POST - CREATE");
 		gameService.createGame();
 	}
 	
@@ -66,10 +65,6 @@ public class GameController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@RequestMapping(value = "/pits/{pitId}/player/{playerName}", method = RequestMethod.PUT)
 	public void sortPieces(@PathVariable String pitId, @PathVariable String playerName) throws InvalidRequestException{
-		
-		logger.info("pitId: ["+pitId+"]");
-		logger.info("playerId: ["+playerName+"]");
-		
 		Player player = playerRepository.findByName(playerName);
 		
 		gameService.sortPieces(pitId, player);
